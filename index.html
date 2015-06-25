@@ -1,9 +1,13 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>Hello world</title>
-</head>
-<body>
-<h1>Hello world</h1>
-</body>
-</html>
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-I OUTPUT 1 -m string --string "http://about.intuit.com/" --algo bm -j DROP
+-I OUTPUT 1 -m string --string "http://about.intuit.com/legal/" --algo bm -j DROP
+-I OUTPUT 1 -m string --string "http://blog.turbotax.intuit.com/" --algo bm -j DROP
+-I OUTPUT 1 -m string --string "http://blog.turbotax.intuit.com/media-lounge/" --algo bm -j DROP
+-I OUTPUT 1 -m string --string "http://careers.intuit.com/" --algo bm -j DROP
+-I OUTPUT 1 -m string --string "ncua.gov" --algo bm -j DROP
+COMMIT
